@@ -1,0 +1,57 @@
+﻿
+
+
+<div data-ng-app="ImageApp" data-ng-controller="ImageCtrl">
+
+    <h3 data-ng-bind="currentSecond"></h3>
+
+    <h2 data-ng-bind="Image.title"></h2>
+    <img style="width:100px;height:100px;" data-ng-src={{Image.ImageSrc}} />
+    <input type="button" value="<" data-ng-click="prev()" data-ng-disabled="!isPrevEnabled()" />
+    <input type="button" value=">" data-ng-click="next()" data-ng-disabled="!isNextEnabled()" />
+</div>
+
+
+
+@section scripts
+{
+    <script>
+        angular.module("ImageApp", []).controller("ImageCtrl", function ($scope) {
+            var currentIndex = 0;
+            var imageList = [
+                { ImageSrc: "/Content/1.jpg", title: "img1" },
+                { ImageSrc: "/Content/2.jpg", title: "img2" },
+                { ImageSrc: "/Content/3.jpg", title: "img3" }];
+
+            $scope.currentSecond = 0;
+            $scope.$watch("currentSecond", function () {
+            });
+          
+            window.setInterval(function () {
+                $scope.currentSecond++;
+            /*    $scope.apply();*/
+            },1000);
+
+            $scope.Image = imageList[currentIndex];
+
+            $scope.isNextEnabled = function () {
+                return currentIndex < imageList.length-1;
+            }
+            $scope.isPrevEnabled = function () {
+                return currentIndex > 0;
+            }
+
+            $scope.next  = function () {
+                currentIndex++;
+                $scope.Image = imageList[currentIndex];
+            };
+
+            $scope.prev = function () {
+                currentIndex--;
+                $scope.Image = imageList[currentIndex];
+            };
+
+        });
+
+    </script>
+}

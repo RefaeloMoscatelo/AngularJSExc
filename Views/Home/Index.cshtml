@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<style>
+   .borderClass{
+       background-color:fuchsia;
+       border-radius:10px;
+       border:2px solid black;
+       padding:20px;
+   }
+</style>
+
+@*//      עם איזה קונטרולר עובדים          מי האובייקט איתו עובדים
+    //  אפליקצייה יכולה להכיל מספר קונטרולרים
+    //   דיירקטיב זה הפרופרטי של האפפ, כל טקסט בוקס או אינפוט הוא דיירקטיב*@
+<div data-ng-app="rafaelApp" data-ng-controller="PersonController">
+
+    <div data-ng-class="{borderClass:isSaved}">
+        <div>
+            <label for="FirstName">FirstName</label>
+        </div>
+        <div>
+            <input type="text" data-ng-model="FirstName" />
+        </div>
+        <div>
+            <label for="LasttName">LasttName</label>
+        </div>
+        <div>
+            <input type="text" data-ng-model="LastName" />
+        </div>
+        <p>
+            <input type="button" value="Save" data-ng-click="save()" />
+            <input type="button" value="Clear" data-ng-click="clear()" />
+        </p>
+        <div>
+            <input type="text" data-ng-model="Picture" />
+        </div>
+        <img style="width:100px;border:1px solid red" src="~/Content/{{Picture}}.jpg" data-ng-show="isImageValid()" />
+        <div>
+            <label for="FirstName">FirstName</label>
+        </div>
+        {{FirstName}}
+        <div>
+            <label for="LastName">LastName</label>
+        </div>
+        {{LastName}}
+
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        var app = angular.module("rafaelApp", []);
+        app.controller("PersonController", function ($scope) {
+            $scope.FirstName = "Rafael";
+            $scope.LastName = "Mosco"
+            $scope.Picture = "1";
+            $scope.isSaved = false;
+
+            $scope.save = function () {
+                $scope.isSaved = true;
+                alert($scope.FirstName);
+            }
+            $scope.clear = function () {
+                $scope.FirstName = "";
+                $scope.LastName = ""
+                $scope.Picture = "";
+                $scope.isSaved = false;
+            }
+
+            $scope.isImageValid = function () {
+                return $scope.Picture < 3;
+            }
+        });
+    </script>
+}

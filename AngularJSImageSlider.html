@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        .borderClass {
+            background-color: fuchsia;
+            border-radius: 10px;
+            border: 2px solid black;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div data-ng-app="ImageApp" data-ng-controller="ImageCtrl">
+        <h2 data-ng-bind="Image.title"></h2>
+        <img id="img" style="width:100px;height:100px;" data-ng-src={{Image.ImageSrc}} />
+        <input type="button" value="<" data-ng-click="prev()" data-ng-disabled="!isPrevEnabled()" />
+        <input type="button" value=">" data-ng-click="next()" data-ng-disabled="!isNextEnabled()" />
+    </div>
+</body>
+</html>
+<script>
+    angular.module("ImageApp", []).controller("ImageCtrl", function ($scope) {
+        var currentIndex = 0;
+        var imageList = [
+            { ImageSrc: "/Content/1.jpg", title: "img1" },
+            { ImageSrc: "/Content/2.jpg", title: "img2" },
+            { ImageSrc: "/Content/3.jpg", title: "img3" }];
+        $scope.pic = "1";
+        $scope.currentSecond = 0;
+        $scope.$watch("currentSecond", function () {
+        });
+
+        window.setInterval(function () {
+            $scope.currentSecond++;
+            /*    $scope.apply();*/
+           
+        }, 1000);
+
+        $scope.Image = imageList[currentIndex];
+
+        $scope.isNextEnabled = function () {
+            return currentIndex < imageList.length - 1;
+        }
+        $scope.isPrevEnabled = function () {
+            return currentIndex > 0;
+        }
+
+        $scope.next = function () {
+            currentIndex++;
+            $scope.Image = imageList[currentIndex];
+        };
+
+        $scope.prev = function () {
+            currentIndex--;
+            $scope.Image = imageList[currentIndex];
+        };
+
+    });
+</script>
